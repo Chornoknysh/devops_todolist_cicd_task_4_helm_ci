@@ -4,13 +4,16 @@ run-name: ${{ github.actor }} - ${{ github.ref_name }} - ${{ github.sha }}
 
 on:
   push:
-    branches: [ your_name ]
+    branches:
+      - main
+      - develop
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 env:
   PythonVersion: 3.8
-  DockerImageName: todoapp
+  DockerImageName: danyildev/django-todo
 
 jobs:
   prepare:
@@ -88,7 +91,7 @@ jobs:
           push: true
           context: .
           file: ./Dockerfile
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DockerImageName }}:${{ github.sha }}
+          tags: ${{ env.DockerImageName }}:${{ github.sha }}
 
   helm-ci:
     runs-on: ubuntu-latest
